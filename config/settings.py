@@ -38,7 +38,9 @@ INSTALLED_APPS = [
     # third party
     'rest_framework',
     # local
-    'accounts'
+    'core.apps.CoreConfig',
+    'accounts.apps.AccountsConfig',
+    'lessons.apps.LessonsConfig',
 
 ]
 
