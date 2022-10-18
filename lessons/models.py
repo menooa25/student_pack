@@ -11,8 +11,14 @@ class Building(models.Model):
         return self.name
 
 
+class Status(models.Model):
+    name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
+
+
 class Lesson(models.Model):
-    name = models.CharField(max_length=200)
     SHANBE = 0
     YEKSHANBE = 1
     DOSHANBE = 2
@@ -29,12 +35,14 @@ class Lesson(models.Model):
         (PANJSHANBE, 'پنجشنبه'),
         (JOME, 'جمعه'),
     ]
+    name = models.CharField(max_length=200)
     lesson_time = models.TimeField()
     lesson_day = models.IntegerField(choices=WEEK_DAYS)
     building = models.ForeignKey(Building, on_delete=models.SET_NULL, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     teacher = models.ForeignKey(User, on_delete=models.CASCADE)
+    status = models.ForeignKey(Status, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         return self.name

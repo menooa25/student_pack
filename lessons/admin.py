@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from lessons.models import Lesson, Building
+from lessons.models import Lesson, Building, Status
 
 
 class LessonAdmin(admin.ModelAdmin):
@@ -10,3 +10,4 @@ class LessonAdmin(admin.ModelAdmin):
 
 admin.site.register(Lesson, LessonAdmin)
 admin.site.register(Building)
+admin.site.register(Status)
