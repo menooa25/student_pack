@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
 from lessons.models import Lesson, Building, Status
@@ -6,7 +7,19 @@ from lessons.models import Lesson, Building, Status
 class BuildingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Building
-        fields = ['name']
+        fields = ['name', 'id']
+
+
+class StatusSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Status
+        fields = ['name', 'id']
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = get_user_model()
+        fields = ['name', 'id']
 
 
 class LessonSerializer(serializers.ModelSerializer):

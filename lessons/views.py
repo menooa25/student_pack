@@ -1,10 +1,14 @@
+from django.contrib.auth import get_user_model
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import status
+from rest_framework.decorators import action
 from rest_framework.filters import SearchFilter
+from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
-from lessons.models import Lesson
+from lessons.models import Lesson, Building, Status
 from lessons.permisions import IsTeacherOrReadOnly
-from lessons.serializers import LessonSerializer
+from lessons.serializers import LessonSerializer, BuildingSerializer, StatusSerializer, UserSerializer
 
 
 class LessonViewSet(ModelViewSet):
@@ -23,3 +27,17 @@ class LessonViewSet(ModelViewSet):
 
     def get_serializer_context(self):
         return {'user': self.request.user}
+
+    @action(detail=False)
+    def filter_options(self, request):
+        building_serializer = BuildingSerializer(Building.objects.all(), many=True)
+        status_serializer = StatusSerializer(Status.objects.all(), many=True)
+        teacher_serializer = UserSerializer(get_user_model().objects.filter(is_staff=False), many=True)
+
+        return Response(
+            {
+                'building': building_serializer.data,
+                'status': status_serializer.data,
+                'teacher': teacher_serializer.data
+            },
+            status.HTTP_200_OK)

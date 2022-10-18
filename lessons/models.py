@@ -17,7 +17,6 @@ class Status(models.Model):
     def __str__(self):
         return self.name
 
-
 class Lesson(models.Model):
     SHANBE = 0
     YEKSHANBE = 1
