@@ -123,3 +123,15 @@ class TestLessonApi(TestCase):
         self.assertEqual(new_lesson_1.building.name, self.lesson_1.building.name)
         self.assertEqual(new_lesson_1.status.name, self.lesson_1.status.name)
         self.assertEqual(Lesson.objects.count(), 2)
+
+    def test_filter_by_teacher(self):
+        response = self.client.get(reverse('lesson-list'), {'teacher__id': self.user_1.id})
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.json()), 1)
+        self.assertEqual(response.json()[0].get('teacher'), self.user_1.name)
+
+    def test_search_by_teacher(self):
+        response = self.client.get(reverse('lesson-list'), {'search': self.user_1.name})
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.json()), 1)
+        self.assertEqual(response.json()[0].get('teacher'), self.user_1.name)

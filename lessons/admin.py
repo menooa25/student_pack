@@ -4,7 +4,7 @@ from lessons.models import Lesson, Building, Status
 
 
 class LessonAdmin(admin.ModelAdmin):
-    list_display = ['name', 'lesson_day', 'lesson_time', 'teacher', 'updated_at']
+    list_display = ['name', 'lesson_day', 'lesson_time', 'teacher', 'updated_at', 'status']
     search_fields = ['name', 'teacher__name', 'teacher__username', 'lesson_time', 'lesson_day']
 
 
