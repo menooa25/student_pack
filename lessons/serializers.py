@@ -10,8 +10,10 @@ class BuildingSerializer(serializers.ModelSerializer):
 
 
 class LessonSerializer(serializers.ModelSerializer):
-    building = serializers.SlugRelatedField(slug_field='name', queryset=Building.objects.all())
-    status = serializers.SlugRelatedField(slug_field='name', queryset=Status.objects.all())
+    building = serializers.SlugRelatedField(slug_field='name',
+                                            queryset=Building.objects.all())
+    status = serializers.SlugRelatedField(slug_field='name',
+                                          queryset=Status.objects.all())
     teacher = serializers.SlugRelatedField(slug_field='name', read_only=True)
 
     class Meta:
