@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'djoser',
     'django_filters',
     "debug_toolbar",
+    "drf_spectacular",
     # local
     'core.apps.CoreConfig',
     'accounts.apps.AccountsConfig',
@@ -131,7 +132,8 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
-    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 SIMPLE_JWT = {
     'AUTH_HEADER_TYPES': ('JWT',),
@@ -142,3 +144,8 @@ INTERNAL_IPS = [
     "127.0.0.1",
     'localhost'
 ]
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Student Pack",
+    "DESCRIPTION": "A pack things that all students need",
+    "VERSION": "1.0.0",
+}
