@@ -11,9 +11,9 @@ class AccountAdmin(UserAdmin):
     add_form = AccountCreationForm
     form = AccountChangeForm
     model = User
-    list_display = ['username', 'name', 'is_staff']
-    fieldsets = UserAdmin.fieldsets + ((None, {"fields": ("name",)}),)
-    add_fieldsets = UserAdmin.add_fieldsets + ((None, {"fields": ("name",)}),)
+    list_display = ['username', 'name', 'is_staff', 'role']
+    fieldsets = UserAdmin.fieldsets + ((None, {"fields": ("name", 'role')}),)
+    add_fieldsets = UserAdmin.add_fieldsets + ((None, {"fields": ("name", 'role')}),)
 
 
 site.register(User, AccountAdmin)

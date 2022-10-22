@@ -6,6 +6,8 @@ from rest_framework.filters import SearchFilter
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
+from accounts.models import Account
+
 from lessons.models import Lesson, Building, Status
 from lessons.permisions import IsTeacherOrReadOnly
 from lessons.serializers import LessonSerializer, BuildingSerializer, StatusSerializer, UserSerializer
@@ -32,7 +34,7 @@ class LessonViewSet(ModelViewSet):
     def filter_options(self, request):
         building_serializer = BuildingSerializer(Building.objects.all(), many=True)
         status_serializer = StatusSerializer(Status.objects.all(), many=True)
-        teacher_serializer = UserSerializer(get_user_model().objects.filter(is_staff=False), many=True)
+        teacher_serializer = UserSerializer(get_user_model().objects.filter(role=Account.TEACHER), many=True)
 
         return Response(
             {

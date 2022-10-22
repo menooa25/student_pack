@@ -25,9 +25,9 @@ SECRET_KEY = env.str('SECRET_KEY',
                      'not-secure-RJ4IlzFeZRYL0P-S8iOrGpCY4gCC-hLWsBrI49Qasdfasdf9MAE_eaxo36UMOvwrerwerJkg4eJU6_9J0LgajSdBTRU')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env.bool('DEBUG', False)
+DEBUG = env.bool('DEBUG', True)
 
-ALLOWED_HOSTS = env.list('ALLOWED_HOSTS',[])
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', [])
 
 # Application definition
 
@@ -90,7 +90,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    'default': env.dj_db_url('DATABASE_URL','sqlite:///db.sqlite3')
+    'default': env.dj_db_url('DATABASE_URL', 'sqlite:///db.sqlite3')
 }
 
 # Password validation
@@ -157,4 +157,4 @@ SPECTACULAR_SETTINGS = {
     "VERSION": "1.0.0",
 }
 
-CORS_ORIGIN_WHITELIST = env.list('CORS_WHITELIST',[])
+CORS_ORIGIN_WHITELIST = env.list('CORS_WHITELIST', [])
