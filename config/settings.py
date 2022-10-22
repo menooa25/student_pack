@@ -146,6 +146,6 @@ INTERNAL_IPS = [
 ]
 SPECTACULAR_SETTINGS = {
     "TITLE": "Student Pack",
-    "DESCRIPTION": "A pack things that all students need",
+    "DESCRIPTION": "A pack of things that all students needs",
     "VERSION": "1.0.0",
 }
