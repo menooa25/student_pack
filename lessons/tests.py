@@ -146,3 +146,15 @@ class TestLessonApi(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.json()), 1)
         self.assertEqual(response.json()[0].get('teacher'), self.user_1.name)
+
+    def test_cant_create_exist_lesson_with_same_teacher(self):
+        body = {
+            'name': self.lesson_1.name,
+            'lesson_time': self.lesson_1.lesson_time,
+            'lesson_day': self.lesson_1.lesson_day,
+            'building': self.building.name,
+            'status': self.started_status.name
+        }
+        access_token = self.login(self.user_1, True)
+        response = self.client.post(reverse('lesson-list'), body, HTTP_AUTHORIZATION=f'JWT {access_token}')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)

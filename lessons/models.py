@@ -17,6 +17,7 @@ class Status(models.Model):
     def __str__(self):
         return self.name
 
+
 class Lesson(models.Model):
     SHANBE = 0
     YEKSHANBE = 1
@@ -42,6 +43,9 @@ class Lesson(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     teacher = models.ForeignKey(User, on_delete=models.CASCADE)
     status = models.ForeignKey(Status, on_delete=models.SET_NULL, null=True)
+
+    class Meta:
+        unique_together = ('lesson_time', 'lesson_day', 'teacher', 'name')
 
     def __str__(self):
         return self.name

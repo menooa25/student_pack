@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
+from rest_framework.validators import UniqueTogetherValidator
 
 from accounts.models import Account
 from lessons.models import Lesson, Building, Status
@@ -43,6 +44,19 @@ class LessonSerializer(serializers.ModelSerializer):
             'status',
             'id'
         ]
+
+    def validate(self, attrs):
+        dict_attrs = dict(attrs)
+        user = self.context.get('user')
+        lesson_time = dict_attrs.get('lesson_time')
+        lesson_day = dict_attrs.get('lesson_day')
+        name = dict_attrs.get('name')
+        lesson = self.Meta.model.objects.filter(teacher=user, lesson_time=lesson_time, lesson_day=lesson_day,
+                                                name=name).first()
+        if lesson:
+            message = f'The fields users, lesson_time, lesson_day and name must make a unique set.'
+            raise serializers.ValidationError({'unique_together': message})
+        return attrs
 
     def create(self, validated_data):
         user = self.context.get('user')
