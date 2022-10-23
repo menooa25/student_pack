@@ -4,13 +4,15 @@ from django.urls import reverse
 from rest_framework import status
 from rest_framework.utils import json
 
+from accounts.models import Account
 from lessons.models import Building, Lesson, Status
 
 
 class TestLessonModel(TestCase):
     @classmethod
     def setUpTestData(cls):
-        cls.teacher = get_user_model().objects.create_user(username='menooa', password='secure_one')
+        cls.teacher = get_user_model().objects.create_user(username='menooa', password='secure_one',
+                                                           role=Account.TEACHER)
         cls.building = Building.objects.create(name='خارزمی')
         cls.lesson = Lesson.objects.create(name='django', building=cls.building, teacher=cls.teacher,
                                            lesson_time='10:30:00', lesson_day=2)
@@ -38,8 +40,10 @@ class TestLessonApi(TestCase):
         user = get_user_model()
         cls.started_status = Status.objects.create(name='شروع شده')
         cls.not_started_status = Status.objects.create(name='شروع نشده')
-        cls.user_1 = user.objects.create_user(username='user_1', password='secure_password', name='user_name_1')
-        cls.user_2 = user.objects.create_user(username='user_2', password='secure_password', name='user_name_2')
+        cls.user_1 = user.objects.create_user(username='user_1', password='secure_password', name='user_name_1',
+                                              role=Account.TEACHER)
+        cls.user_2 = user.objects.create_user(username='user_2', password='secure_password', name='user_name_2',
+                                              role=Account.TEACHER)
         cls.building = Building.objects.create(name='خارزمی')
         cls.lesson_1 = Lesson.objects.create(lesson_day=2, lesson_time='09:00:00', teacher=cls.user_1,
                                              building=cls.building, name='python', status=cls.started_status)
@@ -70,6 +74,13 @@ class TestLessonApi(TestCase):
     def test_unauthorized_user_cant_create(self):
         response = self.client.post(reverse('lesson-list'), {})
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_not_teacher_user_cant_create(self):
+        not_teacher = get_user_model().objects.create_user(username='not_teacher', password='secure_password',
+                                                           name='mr not teacher', role=Account.STUDENT)
+        access_token = self.login(not_teacher, True)
+        response = self.client.post(reverse('lesson-list'), {}, HTTP_AUTHORIZATION=f'JWT {access_token}')
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_create_lesson_with_correct_user(self):
         body = {
