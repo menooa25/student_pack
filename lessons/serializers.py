@@ -25,23 +25,26 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class LessonSerializer(serializers.ModelSerializer):
-    building = serializers.SlugRelatedField(slug_field='name',
-                                            queryset=Building.objects.all())
-    status = serializers.SlugRelatedField(slug_field='name',
-                                          queryset=Status.objects.all())
+    building_name = serializers.SlugRelatedField(slug_field='name',
+                                                 source='building', read_only=True)
+    status_name = serializers.SlugRelatedField(slug_field='name',
+                                               source='status', read_only=True)
     teacher = serializers.SlugRelatedField(slug_field='name', read_only=True)
 
     class Meta:
         model = Lesson
         fields = [
+
             'name',
             'lesson_time',
             'lesson_day',
             'building',
+            'building_name',
             'created_at',
             'updated_at',
             'teacher',
             'status',
+            'status_name',
             'id'
         ]
 

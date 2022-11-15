@@ -87,8 +87,8 @@ class TestLessonApi(TestCase):
             'name': 'magic lesson',
             'lesson_time': "20:00",
             'lesson_day': 6,
-            'building': self.building.name,
-            'status': self.started_status.name
+            'building': self.building.id,
+            'status': self.started_status.id
         }
         access_token = self.login(self.user_1, True)
         response = self.client.post(reverse('lesson-list'), body, HTTP_AUTHORIZATION=f'JWT {access_token}')
