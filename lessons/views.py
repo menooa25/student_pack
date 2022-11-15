@@ -21,7 +21,7 @@ class LessonViewSet(ModelViewSet):
     search_fields = ['teacher__name', 'name', 'building__name', 'status__name', 'lesson_day', 'lesson_time']
 
     def get_queryset(self):
-        queryset = Lesson.objects.all().select_related('building', 'status')
+        queryset = Lesson.objects.all().select_related('building', 'status').prefetch_related('teacher')
         user = self.request.user
         if user.is_authenticated:
             return queryset.filter(teacher=user)

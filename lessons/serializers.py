@@ -1,8 +1,6 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
-from rest_framework.validators import UniqueTogetherValidator
 
-from accounts.models import Account
 from lessons.models import Lesson, Building, Status
 
 
@@ -30,11 +28,12 @@ class LessonSerializer(serializers.ModelSerializer):
     status_name = serializers.SlugRelatedField(slug_field='name',
                                                source='status', read_only=True)
     teacher = serializers.SlugRelatedField(slug_field='name', read_only=True)
+    building = serializers.PrimaryKeyRelatedField(write_only=True,queryset=Building.objects.all())
+    status = serializers.PrimaryKeyRelatedField(write_only=True,queryset=Status.objects.all())
 
     class Meta:
         model = Lesson
         fields = [
-
             'name',
             'lesson_time',
             'lesson_day',
