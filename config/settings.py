@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'core.apps.CoreConfig',
     'accounts.apps.AccountsConfig',
     'lessons.apps.LessonsConfig',
+    'teacher_note.apps.TeacherNoteConfig'
 
 ]
 

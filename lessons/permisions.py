@@ -11,7 +11,9 @@ class IsTeacherOrReadOnly(BasePermission):
             return request.user.role == Account.TEACHER
 
     def has_object_permission(self, request, view, obj):
+        update_methods = ['PATCH']
+
         if request.method in SAFE_METHODS:
             return True
-        if request.method != 'PUT' and request.user.is_authenticated:
+        if request.method in update_methods and request.user.is_authenticated:
             return request.user.role == Account.TEACHER

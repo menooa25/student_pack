@@ -39,6 +39,7 @@ class LessonSerializer(serializers.ModelSerializer):
             'lesson_day',
             'building',
             'building_name',
+            'class_number',
             'created_at',
             'updated_at',
             'teacher',
@@ -46,19 +47,6 @@ class LessonSerializer(serializers.ModelSerializer):
             'status_name',
             'id'
         ]
-
-    # def is_unique_together(self, valid_data, exception_id=-1):
-    #     dict_attrs = dict(valid_data)
-    #     user = self.context.get('user')
-    #     lesson_time = dict_attrs.get('lesson_time')
-    #     lesson_day = dict_attrs.get('lesson_day')
-    #     name = dict_attrs.get('name')
-    #     lesson = self.Meta.model.objects.filter(teacher=user, lesson_time=lesson_time, lesson_day=lesson_day,
-    #                                             name=name).exclude(id=exception_id).first()
-    #     if lesson:
-    #         message = f'The fields users, lesson_time, lesson_day and name must make a unique set.'
-    #         raise serializers.ValidationError({'unique_together': message})
-    # todo: use this for create proper response when user wants create unique together
     def create(self, validated_data):
         user = self.context.get('user')
         return Lesson.objects.create(**validated_data, teacher=user)

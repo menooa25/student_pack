@@ -38,6 +38,7 @@ class Lesson(models.Model):
     name = models.CharField(max_length=200)
     lesson_time = models.TimeField()
     lesson_day = models.IntegerField(choices=WEEK_DAYS)
+    class_number = models.IntegerField(default=None, null=True)
     building = models.ForeignKey(Building, on_delete=models.SET_NULL, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
