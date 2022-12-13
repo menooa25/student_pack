@@ -10,3 +10,5 @@ class Note(models.Model):
     description = models.TextField()
     lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE)
     teacher = models.ForeignKey(User, on_delete=models.CASCADE)
+    def __str__(self):
+        return f'{self.teacher} - {self.description}'
