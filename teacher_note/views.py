@@ -9,7 +9,12 @@ from teacher_note.serializers import NoteSerializer
 class NoteViewSet(ModelViewSet):
     serializer_class = NoteSerializer
     permission_classes = [IsTeacherOrReadOnly,OnlyTeacherLessons ]
-    queryset = Note.objects.all()
+    def get_queryset(self):
+        queryset = Note.objects.all()
+        user = self.request.user
+        if user.is_authenticated:
+            return queryset.filter(teacher=user)
+        return queryset
 
     def get_serializer_context(self):
         return {'user': self.request.user}
