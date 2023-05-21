@@ -28,8 +28,9 @@ SECRET_KEY = env.str('SECRET_KEY',
 DEBUG = env.bool('DEBUG', True)
 
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', [])
-
 # Application definition
+
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -158,4 +159,8 @@ SPECTACULAR_SETTINGS = {
     "VERSION": "1.0.0",
 }
 
-CORS_ORIGIN_WHITELIST = env.list('CORS_WHITELIST', [])
+CORS_ORIGIN_WHITELIST = tuple(env.list('CORS_WHITELIST', [
+    'student-pack.ir',
+    'https://student-pack.ir/',
+    'student-pack.ir/',
+]))
